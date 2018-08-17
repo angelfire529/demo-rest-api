@@ -3,7 +3,7 @@ var creatives = require('./data/creatives.json');
 
 var express = require('express');
 
-var app = new express();
+var app = express();
 
 var port = process.env.PORT || 5000;
 
@@ -19,6 +19,14 @@ router.route('/creatives')
 .get((req, res) => {
     var data = creatives;
     res.json(data);
+});
+
+app.use((req, res, next) => {
+    res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+    });
+    next();
 });
 
 app.use('/api', router);
